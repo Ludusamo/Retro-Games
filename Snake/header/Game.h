@@ -13,7 +13,7 @@ typedef struct {
 } Game;
 
 void start_game(Game *game);
-void stop_game();
+void stop_game(Game *game);
 
 void update();
 void render();

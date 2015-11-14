@@ -18,3 +18,9 @@ void start_game(Game *game) {
 	SDL_UpdateWindowSurface(game->window);
 	SDL_Delay(2000);
 }
+
+void stop_game(Game *game) {
+	printf("Stopping game\n");
+	SDL_DestroyWindow(game->window);
+	printf("Destroyed Window\n");
+}
