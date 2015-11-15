@@ -1,4 +1,4 @@
-OBJS = src/Game.c main.c
+OBJS = src/Snake.c src/Game.c main.c
 
 CC = gcc
 
