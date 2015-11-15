@@ -37,9 +37,10 @@ void game_loop(Game *game) {
 
 		SDL_SetRenderDrawColor(game->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(game->renderer);
-
+		move_snake(&snake);
 		render_snake(game->renderer, &snake);
 		SDL_RenderPresent(game->renderer);
+		SDL_Delay(500);
 	}
 }
 

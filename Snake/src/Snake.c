@@ -34,8 +34,19 @@ void add_segment(Snake *snake) {
 	//snake->tail->nextSeg = create_seg(
 }
 
+void move_snake(Snake *snake) {
+	Seg *currSeg = snake->head;		
+	while (currSeg) {
+		int dir = currSeg->dir;
+		if (dir == UP) currSeg->y--;
+		if (dir == DOWN) currSeg->y++;
+		if (dir == LEFT) currSeg->x--;
+		if (dir == RIGHT) currSeg->x++;
+		currSeg = currSeg->nextSeg;
+	}
+}
+
 void render_snake(SDL_Renderer *renderer, Snake *snake) {
-	printf("%i %i\n", snake->head->x, snake->head->y);
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
 	Seg *currSeg = snake->head;
 	while (currSeg != NULL) {
