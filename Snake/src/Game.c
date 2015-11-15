@@ -28,12 +28,23 @@ void start_game(Game *game) {
 void game_loop(Game *game) {
 	Snake snake = create_snake();
 	SDL_Event e;
+	const Uint8* currentKeyStates;
 	while (game->running) {
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 				stop_game(game);
 			}
 		}
+
+		currentKeyStates = SDL_GetKeyboardState(NULL);	
+		if (currentKeyStates[SDL_SCANCODE_UP])
+			snake.head->dir = UP;
+		if (currentKeyStates[SDL_SCANCODE_DOWN])
+			snake.head->dir = DOWN;
+		if (currentKeyStates[SDL_SCANCODE_LEFT])
+			snake.head->dir = LEFT;
+		if (currentKeyStates[SDL_SCANCODE_RIGHT])
+			snake.head->dir = RIGHT;
 
 		SDL_SetRenderDrawColor(game->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(game->renderer);

@@ -12,8 +12,12 @@ Seg* create_seg(int x, int y, int dir) {
 Snake create_snake() {
 	Snake snake;	
 	snake.head = create_seg(3, 3, RIGHT);
+
 	snake.head->nextSeg = create_seg(2, 3, RIGHT);
+	snake.head->nextSeg->parent = snake.head;
+
 	snake.head->nextSeg->nextSeg = create_seg(1, 3, RIGHT);
+	snake.head->nextSeg->nextSeg->parent = snake.head->nextSeg;
 	snake.tail = snake.head->nextSeg->nextSeg;
 	return snake;
 }
@@ -35,14 +39,30 @@ void add_segment(Snake *snake) {
 }
 
 void move_snake(Snake *snake) {
-	Seg *currSeg = snake->head;		
+	Seg *currSeg = snake->tail;		
 	while (currSeg) {
 		int dir = currSeg->dir;
-		if (dir == UP) currSeg->y--;
-		if (dir == DOWN) currSeg->y++;
-		if (dir == LEFT) currSeg->x--;
-		if (dir == RIGHT) currSeg->x++;
-		currSeg = currSeg->nextSeg;
+		if (dir == UP) {
+			currSeg->y--;
+			if (currSeg->parent && currSeg->y == currSeg->parent->y)
+				currSeg->dir = currSeg->parent->dir;
+		}
+		if (dir == DOWN) {
+			currSeg->y++;
+			if (currSeg->parent && currSeg->y == currSeg->parent->y)
+				currSeg->dir = currSeg->parent->dir;
+		}
+		if (dir == LEFT) {
+			currSeg->x--;
+			if (currSeg->parent && currSeg->x == currSeg->parent->x)
+				currSeg->dir = currSeg->parent->dir;
+		}
+		if (dir == RIGHT) {
+			currSeg->x++;
+			if (currSeg->parent && currSeg->x == currSeg->parent->x)
+				currSeg->dir = currSeg->parent->dir;
+		}
+		currSeg = currSeg->parent;
 	}
 }
 

@@ -20,6 +20,7 @@ typedef struct Seg {
 	int y;
 	int dir;
 	struct Seg *nextSeg;
+	struct Seg *parent;
 	SDL_Rect bound;
 } Seg;
 
