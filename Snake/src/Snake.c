@@ -53,21 +53,25 @@ void move_snake(Snake *snake) {
 			currSeg->y--;
 			if (currSeg->parent && currSeg->y == currSeg->parent->y)
 				currSeg->dir = currSeg->parent->dir;
+			if (currSeg->y < 0) currSeg->y = 30 - 1;
 		}
 		if (dir == DOWN) {
 			currSeg->y++;
 			if (currSeg->parent && currSeg->y == currSeg->parent->y)
 				currSeg->dir = currSeg->parent->dir;
+			if (currSeg->y > 30) currSeg->y = 0;
 		}
 		if (dir == LEFT) {
 			currSeg->x--;
 			if (currSeg->parent && currSeg->x == currSeg->parent->x)
 				currSeg->dir = currSeg->parent->dir;
+			if (currSeg->x < 0) currSeg->x = 40 - 1;
 		}
 		if (dir == RIGHT) {
 			currSeg->x++;
 			if (currSeg->parent && currSeg->x == currSeg->parent->x)
 				currSeg->dir = currSeg->parent->dir;
+			if (currSeg->x > 40) currSeg->x = 0;
 		}
 		currSeg = currSeg->parent;
 	}
