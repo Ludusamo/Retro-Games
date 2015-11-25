@@ -16,6 +16,7 @@ typedef struct {
 	SDL_Surface *screen;
 	SDL_Renderer *renderer;
 	int running;
+	int reset;
 } Game;
 
 void start_game(Game *game);

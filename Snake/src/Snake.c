@@ -20,8 +20,7 @@ Snake create_snake() {
 	snake.head->nextSeg->nextSeg->parent = snake.head->nextSeg;
 	snake.tail = snake.head->nextSeg->nextSeg;
 	return snake;
-}
-
+} 
 void add_segment(Snake *snake) {
 	int x, y;
 	int dir = snake->tail->dir;
@@ -45,7 +44,7 @@ void add_segment(Snake *snake) {
 	snake->tail = newSeg;;
 }
 
-void move_snake(Snake *snake) {
+int move_snake(Snake *snake) {
 	Seg *currSeg = snake->tail;		
 	while (currSeg) {
 		int dir = currSeg->dir;
@@ -75,6 +74,12 @@ void move_snake(Snake *snake) {
 		}
 		currSeg = currSeg->parent;
 	}
+	currSeg = snake->head->nextSeg;
+	while (currSeg) {
+		if (collided_with_head(snake->head, currSeg)) return 1;
+		currSeg = currSeg->nextSeg;
+	}
+	return 0;
 }
 
 void render_snake(SDL_Renderer *renderer, Snake *snake) {
@@ -85,4 +90,8 @@ void render_snake(SDL_Renderer *renderer, Snake *snake) {
 		SDL_RenderFillRect(renderer, &currSeg->bound);
 		currSeg = currSeg->nextSeg;
 	}
+}
+
+int collided_with_head(Seg *head, Seg *seg) {
+	return (head->x == seg->x) && (head->y == seg->y);	
 }

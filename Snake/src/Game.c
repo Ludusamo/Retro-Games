@@ -32,6 +32,13 @@ void game_loop(Game *game) {
 	SDL_Event e;
 	const Uint8* currentKeyStates;
 	while (game->running) {
+		if (game->reset) {
+			snake = create_snake();
+			free(col);
+			col = spawn_collectible();
+			game->reset = 0;
+		}
+
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 				stop_game(game);
@@ -71,7 +78,10 @@ void clear_screen(Game *game) {
 }
 
 void update(Game *game, Snake *snake, Collectible *col) {
-	move_snake(snake);
+	int collided = move_snake(snake);
+	if (collided) {
+		game->reset = 1;
+	}
 	if (snake->head->x == col->x && snake->head->y == col->y) {
 		free(col);
 		col = spawn_collectible();

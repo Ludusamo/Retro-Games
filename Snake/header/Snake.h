@@ -32,7 +32,9 @@ typedef struct {
 Seg* create_seg(int x, int y, int dir);
 Snake create_snake();
 void add_segment(Snake *snake);
-void move_snake(Snake *snake);
+int move_snake(Snake *snake);
 void render_snake(SDL_Renderer *renderer, Snake *snake);
+
+int collided_with_head(Seg *head, Seg *seg);
 
 #endif // SNAKE_H
