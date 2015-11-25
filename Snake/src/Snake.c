@@ -77,7 +77,6 @@ void render_snake(SDL_Renderer *renderer, Snake *snake) {
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
 	Seg *currSeg = snake->head;
 	while (currSeg != NULL) {
-		printf("%i %i\n", currSeg->x, currSeg->y);
 		currSeg->bound = (SDL_Rect) { currSeg->x * SEG_WIDTH, currSeg->y * SEG_HEIGHT, SEG_WIDTH, SEG_HEIGHT };
 		SDL_RenderFillRect(renderer, &currSeg->bound);
 		currSeg = currSeg->nextSeg;

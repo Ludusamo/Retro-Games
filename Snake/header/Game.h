@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "Snake.h"
+#include "Collectible.h"
 
 #define WIDTH 800
 #define HEIGHT 600

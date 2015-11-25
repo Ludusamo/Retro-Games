@@ -2,6 +2,7 @@
 
 void start_game(Game *game) {
 	printf("Initializing Game\n");
+	srand(time(NULL));
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("SDL Failed to Init. SDL Error: %s\n", SDL_GetError());
 		exit(EXIT_FAILURE);
@@ -27,6 +28,7 @@ void start_game(Game *game) {
 
 void game_loop(Game *game) {
 	Snake snake = create_snake();
+	Collectible *col = spawn_collectible();
 	SDL_Event e;
 	const Uint8* currentKeyStates;
 	while (game->running) {
@@ -37,13 +39,13 @@ void game_loop(Game *game) {
 		}
 
 		currentKeyStates = SDL_GetKeyboardState(NULL);	
-		if (currentKeyStates[SDL_SCANCODE_UP])
+		if (snake.head->dir != DOWN && currentKeyStates[SDL_SCANCODE_UP])
 			snake.head->dir = UP;
-		if (currentKeyStates[SDL_SCANCODE_DOWN])
+		else if (snake.head->dir != UP && currentKeyStates[SDL_SCANCODE_DOWN])
 			snake.head->dir = DOWN;
-		if (currentKeyStates[SDL_SCANCODE_LEFT])
+		else if (snake.head->dir != RIGHT && currentKeyStates[SDL_SCANCODE_LEFT])
 			snake.head->dir = LEFT;
-		if (currentKeyStates[SDL_SCANCODE_RIGHT])
+		else if (snake.head->dir != LEFT && currentKeyStates[SDL_SCANCODE_RIGHT])
 			snake.head->dir = RIGHT;
 		if (currentKeyStates[SDL_SCANCODE_D])
 			add_segment(&snake);
@@ -52,6 +54,7 @@ void game_loop(Game *game) {
 		SDL_RenderClear(game->renderer);
 		move_snake(&snake);
 		render_snake(game->renderer, &snake);
+		render_collectible(game->renderer, col);
 		SDL_RenderPresent(game->renderer);
 		SDL_Delay(250);
 	}
