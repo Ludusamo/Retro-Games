@@ -25,17 +25,24 @@ Snake create_snake() {
 void add_segment(Snake *snake) {
 	int x, y;
 	int dir = snake->tail->dir;
-	switch (dir) {
-	case UP:	
-		break;
-	case DOWN:
-		break;
-	case LEFT:
-		break;
-	case RIGHT:
-		break;
+	if (dir == UP) {
+		x = snake->tail->x;
+		y = snake->tail->y + 1;
+	} else if (dir == DOWN) {
+		x = snake->tail->x;
+		y = snake->tail->y - 1;
+	} else if (dir == LEFT) {
+		x = snake->tail->x + 1;
+		y = snake->tail->y;
+	} else if (dir == RIGHT) {
+		x = snake->tail->x - 1;
+		y = snake->tail->y;
 	}
-	//snake->tail->nextSeg = create_seg(
+
+	Seg *newSeg = create_seg(x, y, dir);
+	newSeg->parent = snake->tail;
+	snake->tail->nextSeg = newSeg;
+	snake->tail = newSeg;;
 }
 
 void move_snake(Snake *snake) {
@@ -71,7 +78,7 @@ void render_snake(SDL_Renderer *renderer, Snake *snake) {
 	Seg *currSeg = snake->head;
 	while (currSeg != NULL) {
 		printf("%i %i\n", currSeg->x, currSeg->y);
-		currSeg->bound = (SDL_Rect) { currSeg->x * SEG_WIDTH, currSeg->y * SEG_HEIGHT, 10, 10 };
+		currSeg->bound = (SDL_Rect) { currSeg->x * SEG_WIDTH, currSeg->y * SEG_HEIGHT, SEG_WIDTH, SEG_HEIGHT };
 		SDL_RenderFillRect(renderer, &currSeg->bound);
 		currSeg = currSeg->nextSeg;
 	}

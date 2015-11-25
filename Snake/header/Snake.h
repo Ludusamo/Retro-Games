@@ -5,8 +5,8 @@
 #include <SDL2/SDL_render.h>
 #include <stdio.h>
 
-#define SEG_WIDTH 10
-#define SEG_HEIGHT 10
+#define SEG_WIDTH 20
+#define SEG_HEIGHT 20
 
 typedef enum {
 	UP,
@@ -32,7 +32,6 @@ typedef struct {
 Seg* create_seg(int x, int y, int dir);
 Snake create_snake();
 void add_segment(Snake *snake);
-void change_direction(Snake *snake);
 void move_snake(Snake *snake);
 void render_snake(SDL_Renderer *renderer, Snake *snake);
 

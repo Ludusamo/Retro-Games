@@ -45,13 +45,15 @@ void game_loop(Game *game) {
 			snake.head->dir = LEFT;
 		if (currentKeyStates[SDL_SCANCODE_RIGHT])
 			snake.head->dir = RIGHT;
+		if (currentKeyStates[SDL_SCANCODE_D])
+			add_segment(&snake);
 
 		SDL_SetRenderDrawColor(game->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(game->renderer);
 		move_snake(&snake);
 		render_snake(game->renderer, &snake);
 		SDL_RenderPresent(game->renderer);
-		SDL_Delay(500);
+		SDL_Delay(250);
 	}
 }
 
