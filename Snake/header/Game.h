@@ -22,7 +22,8 @@ void start_game(Game *game);
 void game_loop(Game *game);
 void stop_game(Game *game);
 
-void update();
-void render();
+void clear_screen(Game *game);
+void update(Game *game, Snake *snake, Collectible *col);
+void render(Game *game, Snake *snake, Collectible *col);
 
 #endif // GAME_H

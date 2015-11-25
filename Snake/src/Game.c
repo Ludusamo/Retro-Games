@@ -50,12 +50,9 @@ void game_loop(Game *game) {
 		if (currentKeyStates[SDL_SCANCODE_D])
 			add_segment(&snake);
 
-		SDL_SetRenderDrawColor(game->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(game->renderer);
-		move_snake(&snake);
-		render_snake(game->renderer, &snake);
-		render_collectible(game->renderer, col);
-		SDL_RenderPresent(game->renderer);
+		clear_screen(game);		
+		update(game, &snake, col);
+		render(game, &snake, col);
 		SDL_Delay(250);
 	}
 }
@@ -66,4 +63,24 @@ void stop_game(Game *game) {
 	SDL_DestroyWindow(game->window);
 	printf("Destroyed Window\n");
 	SDL_Quit();	
+}
+
+void clear_screen(Game *game) {
+	SDL_SetRenderDrawColor(game->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(game->renderer);
+}
+
+void update(Game *game, Snake *snake, Collectible *col) {
+	move_snake(snake);
+	if (snake->head->x == col->x && snake->head->y == col->y) {
+		free(col);
+		col = spawn_collectible();
+		add_segment(snake);
+	}
+}
+
+void render(Game *game, Snake *snake, Collectible *col) {
+	render_snake(game->renderer, snake);
+	render_collectible(game->renderer, col);
+	SDL_RenderPresent(game->renderer);
 }
